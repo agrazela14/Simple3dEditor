@@ -41,8 +41,8 @@ namespace Simple3dEditor
             MeshGeometry3D    load_geometry = new MeshGeometry3D();
             DiffuseMaterial   load_material = new DiffuseMaterial();
 
-            load_camera.Position = new Point3D(0, 0, 2);
-            load_camera.LookDirection = new Vector3D(0, 0, -1);
+            load_camera.Position = new Point3D(0, 8, 3);
+            load_camera.LookDirection = new Vector3D(0, -0.05, -0.5);
             load_camera.FieldOfView = 60;
 
             this.main_view.Camera = load_camera;

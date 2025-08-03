@@ -82,42 +82,40 @@ namespace Simple3dEditor
 
             num_triangles = BitConverter.ToInt32(read_triangles, 0);
             triangles = new Triangle[num_triangles];
+
             for (int i = 0; i < num_triangles; i++)
             {
                 triangles[i] = new Triangle();
-            }
 
-            foreach ( Triangle tri in triangles)
-            {
-                ret_check = reader.Read(tri.normal_data, 0, 12);
+                ret_check = reader.Read(triangles[i].normal_data, 0, 12);
                 if (ret_check != 12)
                 {
                     // Problem in the data
                 }
-                stl_vectors.Add(new Vector3D(BitConverter.ToSingle(tri.normal_data, 0), BitConverter.ToSingle(tri.normal_data, 4), BitConverter.ToSingle(tri.normal_data, 8)));
+                stl_vectors.Add(new Vector3D(BitConverter.ToSingle(triangles[i].normal_data, 0), BitConverter.ToSingle(triangles[i].normal_data, 4), BitConverter.ToSingle(triangles[i].normal_data, 8)));
 
-                ret_check = reader.Read(tri.vertex1_data, 0, 12);
+                ret_check = reader.Read(triangles[i].vertex1_data, 0, 12);
                 if (ret_check != 12)
                 {
                     // Problem in the data
                 }
-                stl_verticies.Add(new Point3D(BitConverter.ToSingle(tri.vertex1_data, 0), BitConverter.ToSingle(tri.vertex1_data, 4), BitConverter.ToSingle(tri.vertex1_data, 8)));
+                stl_verticies.Add(new Point3D(BitConverter.ToSingle(triangles[i].vertex1_data, 0), BitConverter.ToSingle(triangles[i].vertex1_data, 4), BitConverter.ToSingle(triangles[i].vertex1_data, 8)));
                 
-                ret_check = reader.Read(tri.vertex2_data, 0, 12);
+                ret_check = reader.Read(triangles[i].vertex2_data, 0, 12);
                 if (ret_check != 12)
                 {
                     // Problem in the data
                 }
-                stl_verticies.Add(new Point3D(BitConverter.ToSingle(tri.vertex2_data, 0), BitConverter.ToSingle(tri.vertex2_data, 4), BitConverter.ToSingle(tri.vertex2_data, 8)));
+                stl_verticies.Add(new Point3D(BitConverter.ToSingle(triangles[i].vertex2_data, 0), BitConverter.ToSingle(triangles[i].vertex2_data, 4), BitConverter.ToSingle(triangles[i].vertex2_data, 8)));
 
-                ret_check = reader.Read(tri.vertex3_data, 0, 12);
+                ret_check = reader.Read(triangles[i].vertex3_data, 0, 12);
                 if (ret_check != 12)
                 {
                     // Problem in the data
                 }
-                stl_verticies.Add(new Point3D(BitConverter.ToSingle(tri.vertex3_data, 0), BitConverter.ToSingle(tri.vertex3_data, 4), BitConverter.ToSingle(tri.vertex3_data, 8)));
+                stl_verticies.Add(new Point3D(BitConverter.ToSingle(triangles[i].vertex3_data, 0), BitConverter.ToSingle(triangles[i].vertex3_data, 4), BitConverter.ToSingle(triangles[i].vertex3_data, 8)));
 
-                ret_check = reader.Read(tri.attr_byte_count, 0, 2);
+                ret_check = reader.Read(triangles[i].attr_byte_count, 0, 2);
                 if (ret_check != 2)
                 {
                     // Problem in the data
