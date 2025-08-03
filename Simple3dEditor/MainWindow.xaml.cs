@@ -18,6 +18,13 @@ namespace Simple3dEditor
     {
         public MainWindow()
         {
+            // TODO: Create or find STL Reader library (Ideally quickly)
+            //       Functionality to load STL files 
+            //       Display the loaded file as a mesh via the System.Windows.Controls ViewPort3D
+            //       Then
+            //       Add rotation, move, and scale functionality
+            //       Add plane slicing and merging functionality
+
             InitializeComponent();
         }
     }
