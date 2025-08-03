@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Simple3dEditor"
-        mc:Ignorable="d"
+        xmlns:c="comment"
+        mc:Ignorable="d c"
         Title="MainWindow" Height="1080" Width="1920">
     <Grid>
         <Canvas Name="main_canvas" Height="1080" Width="1920">
-            <Viewport3D Height="450" Width="450" Canvas.Left="735" Canvas.Top="315">
+            <Viewport3D Name="main_view" Height="450" Width="450" Canvas.Left="735" Canvas.Top="315">
+                <c:comment>
                 <Viewport3D.Camera>
                     <PerspectiveCamera
                                 FarPlaneDistance="20"
@@ -24,7 +26,7 @@
                             <Model3DGroup>
                                 <Model3DGroup.Children>
                                     <DirectionalLight Color="#FFFFFF" Direction="3,-4, -5"/>
-                                    <GeometryModel3D>
+                                    <GeometryModel3D x:Name="cone">
                                         <GeometryModel3D.Geometry>
                                             <MeshGeometry3D
                                                     Positions="0.293893 -0.5 0.404509  0.475528 -0.5 0.154509  0 0.5 0  0.475528 -0.5 0.154509  0 0.5 0  0 0.5 0  0.475528 -0.5 0.154509  0.475528 -0.5 -0.154509  0 0.5 0  0.475528 -0.5 -0.154509  0 0.5 0  0 0.5 0  0.475528 -0.5 -0.154509  0.293893 -0.5 -0.404509  0 0.5 0  0.293893 -0.5 -0.404509  0 0.5 0  0 0.5 0  0.293893 -0.5 -0.404509  0 -0.5 -0.5  0 0.5 0  0 -0.5 -0.5  0 0.5 0  0 0.5 0  0 -0.5 -0.5  -0.293893 -0.5 -0.404509  0 0.5 0  -0.293893 -0.5 -0.404509  0 0.5 0  0 0.5 0  -0.293893 -0.5 -0.404509  -0.475528 -0.5 -0.154509  0 0.5 0  -0.475528 -0.5 -0.154509  0 0.5 0  0 0.5 0  -0.475528 -0.5 -0.154509  -0.475528 -0.5 0.154509  0 0.5 0  -0.475528 -0.5 0.154509  0 0.5 0  0 0.5 0  -0.475528 -0.5 0.154509  -0.293892 -0.5 0.404509  0 0.5 0  -0.293892 -0.5 0.404509  0 0.5 0  0 0.5 0  -0.293892 -0.5 0.404509  0 -0.5 0.5  0 0.5 0  0 -0.5 0.5  0 0.5 0  0 0.5 0  0 -0.5 0.5  0.293893 -0.5 0.404509  0 0.5 0  0.293893 -0.5 0.404509  0 0.5 0  0 0.5 0  " 
@@ -45,7 +47,17 @@
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
                 </Viewport3D.Children>
+                </c:comment>
             </Viewport3D>
+            <Button x:Name="FileSelectButton" 
+                    Content="Select File" 
+                    Canvas.Left="335" 
+                    Canvas.Top="222" 
+                    Height="42" 
+                    Width="216" 
+                    FontSize="24"
+                    Click="FileSelectButton_Click"/>
+            <TextBox x:Name="FileLocation" Canvas.Left="625" TextWrapping="Wrap" Text="Enter STL File Location" Canvas.Top="222" Width="269" Height="42" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="26"/>
         </Canvas>
     </Grid>
 </Window>

@@ -1,4 +1,14 @@
 ﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,38 +36,56 @@ namespace Simple3dEditor
         
         private class Triangle
         {
-            public byte[] normal_data     = new byte[12];
-            public byte[] vertex1_data    = new byte[12];
-            public byte[] vertex2_data    = new byte[12];
-            public byte[] vertex3_data    = new byte[12];
-            public byte[] attr_byte_count = new byte[2];
+            public byte[] normal_data;
+            public byte[] vertex1_data;
+            public byte[] vertex2_data;
+            public byte[] vertex3_data;
+            public byte[] attr_byte_count;
+
+            public Triangle()
+            {
+                this.normal_data = new byte[12];
+                this.vertex1_data = new byte[12];
+                this.vertex2_data = new byte[12];
+                this.vertex3_data = new byte[12];
+                this.attr_byte_count = new byte[2];
+        }
         }
         static STLReader()
         {
 
         }
 
-        public static string ReadSTLBinary( string filename )
+        public static (Vector3DCollection, Point3DCollection) ReadSTLBinary( string filename )
         {
-            UINT32 num_triangles = 0;
-            int ret_check = 0;
-            byte[] header = new byte[80];
-            Triangle[] triangles;
-            FileStream reader = new FileStream(filename, FileMode.Open);
+            int ret_check         = 0;
+            int num_triangles     = 0;
+            byte[] read_triangles = new byte[4];
+            byte[] header         = new byte[80];
             
+            FileStream reader                = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            Vector3DCollection stl_vectors   = new Vector3DCollection();
+            Point3DCollection  stl_verticies = new Point3DCollection();
+            Triangle[] triangles;
+
             ret_check = reader.Read(header, 0, 80);
             if (ret_check != 80)
             {
                 // Problem in the data
             }
 
-            ret_check = reader.Read(num_triangles, 80, 4);
+            ret_check = reader.Read(read_triangles, 0, 4);
             if (ret_check != 4)
             {
                 // Problem in the data
             }
 
+            num_triangles = BitConverter.ToInt32(read_triangles, 0);
             triangles = new Triangle[num_triangles];
+            for (int i = 0; i < num_triangles; i++)
+            {
+                triangles[i] = new Triangle();
+            }
 
             foreach ( Triangle tri in triangles)
             {
@@ -66,24 +94,28 @@ namespace Simple3dEditor
                 {
                     // Problem in the data
                 }
+                stl_vectors.Add(new Vector3D(BitConverter.ToSingle(tri.normal_data, 0), BitConverter.ToSingle(tri.normal_data, 4), BitConverter.ToSingle(tri.normal_data, 8)));
 
                 ret_check = reader.Read(tri.vertex1_data, 0, 12);
                 if (ret_check != 12)
                 {
                     // Problem in the data
                 }
-
+                stl_verticies.Add(new Point3D(BitConverter.ToSingle(tri.vertex1_data, 0), BitConverter.ToSingle(tri.vertex1_data, 4), BitConverter.ToSingle(tri.vertex1_data, 8)));
+                
                 ret_check = reader.Read(tri.vertex2_data, 0, 12);
                 if (ret_check != 12)
                 {
                     // Problem in the data
                 }
+                stl_verticies.Add(new Point3D(BitConverter.ToSingle(tri.vertex2_data, 0), BitConverter.ToSingle(tri.vertex2_data, 4), BitConverter.ToSingle(tri.vertex2_data, 8)));
 
                 ret_check = reader.Read(tri.vertex3_data, 0, 12);
                 if (ret_check != 12)
                 {
                     // Problem in the data
                 }
+                stl_verticies.Add(new Point3D(BitConverter.ToSingle(tri.vertex3_data, 0), BitConverter.ToSingle(tri.vertex3_data, 4), BitConverter.ToSingle(tri.vertex3_data, 8)));
 
                 ret_check = reader.Read(tri.attr_byte_count, 0, 2);
                 if (ret_check != 2)
@@ -91,7 +123,7 @@ namespace Simple3dEditor
                     // Problem in the data
                 }
             }
-            return "";
+            return (stl_vectors, stl_verticies);
         }
     }
 }
