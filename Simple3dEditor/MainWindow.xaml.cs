@@ -29,7 +29,7 @@ namespace Simple3dEditor
             InitializeComponent();
         }
 
-        private void MainViewMouse_Wheel(object sender, MouseWheelEventArgs e)
+        private void MainView_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             PerspectiveCamera new_cam = (PerspectiveCamera)this.main_view.Camera;
             // Zoom in if scroll delta is positive
@@ -44,6 +44,32 @@ namespace Simple3dEditor
             }
             this.main_view.Camera = new_cam;
         }
+
+        private void MainView_KeyDown(object sender, KeyEventArgs e)
+        {
+            RotateTransform3D x_rot = new RotateTransform3D();
+            // Rotate left with A press
+            if (e.Key == Key.A)
+            {
+                this.main_view.Children[0].Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 15));
+            }
+            // Rotate right with D press
+            else  if (e.Key == Key.D)
+            {
+                this.main_view.Children[0].Transform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(-1, 0, 0), 15));
+            }
+        }
+
+        private void MainView_Focus(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Got focus on the main_view");
+        }
+
+        private void MainView_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.main_view.Focus();
+        }
+
         private void FileSelectButton_Click(object sender, RoutedEventArgs e)
         {
             // Load the STL Data from the STL Reader from the selected File
@@ -56,9 +82,9 @@ namespace Simple3dEditor
             MeshGeometry3D    load_geometry = new MeshGeometry3D();
             DiffuseMaterial   load_material = new DiffuseMaterial();
 
-            load_camera.Position = new Point3D(0, 8, 3);
-            load_camera.LookDirection = new Vector3D(0, -0.5, -1);
-            load_camera.FieldOfView = 60;
+            load_camera.Position = new Point3D(0, 20, 3);
+            load_camera.LookDirection = new Vector3D(0, 0.5, -1);
+            load_camera.FieldOfView = 45;
 
             this.main_view.Camera = load_camera;
             
