@@ -29,6 +29,21 @@ namespace Simple3dEditor
             InitializeComponent();
         }
 
+        private void MainViewMouse_Wheel(object sender, MouseWheelEventArgs e)
+        {
+            PerspectiveCamera new_cam = (PerspectiveCamera)this.main_view.Camera;
+            // Zoom in if scroll delta is positive
+            if (e.Delta > 0)
+            {
+                new_cam.Position = new Point3D(new_cam.Position.X - 0.1, new_cam.Position.Y - 0.1, new_cam.Position.Z - 0.1);
+            }
+            // Zoom out if scroll delta is negative
+            else if (e.Delta < 0)
+            {
+                new_cam.Position = new Point3D(new_cam.Position.X + 0.1, new_cam.Position.Y + 0.1, new_cam.Position.Z + 0.1);
+            }
+            this.main_view.Camera = new_cam;
+        }
         private void FileSelectButton_Click(object sender, RoutedEventArgs e)
         {
             // Load the STL Data from the STL Reader from the selected File
@@ -42,7 +57,7 @@ namespace Simple3dEditor
             DiffuseMaterial   load_material = new DiffuseMaterial();
 
             load_camera.Position = new Point3D(0, 8, 3);
-            load_camera.LookDirection = new Vector3D(0, -0.05, -0.5);
+            load_camera.LookDirection = new Vector3D(0, -0.5, -1);
             load_camera.FieldOfView = 60;
 
             this.main_view.Camera = load_camera;

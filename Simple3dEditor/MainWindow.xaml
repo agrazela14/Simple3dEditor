@@ -9,7 +9,7 @@
         Title="MainWindow" Height="1080" Width="1920">
     <Grid>
         <Canvas Name="main_canvas" Height="1080" Width="1920">
-            <Viewport3D Name="main_view" Height="450" Width="450" Canvas.Left="735" Canvas.Top="315">
+            <Viewport3D Name="main_view" Height="640" Width="1348" Canvas.Left="335" Canvas.Top="315" MouseWheel="MainViewMouse_Wheel" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <c:comment>
                     <Viewport3D.Camera>
                         <PerspectiveCamera
